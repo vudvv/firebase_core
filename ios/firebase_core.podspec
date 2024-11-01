@@ -3,17 +3,17 @@ require 'yaml'
 pubspec = YAML.load_file(File.join('..', 'pubspec.yaml'))
 library_version = pubspec['version'].gsub('+', '-')
 
-if defined?($FirebaseSDKVersion)
-  Pod::UI.puts "#{pubspec['name']}: Using user specified Firebase SDK version '#{$FirebaseSDKVersion}'"
-  firebase_sdk_version = $FirebaseSDKVersion
-else
+# if defined?($FirebaseSDKVersion)
+#   Pod::UI.puts "#{pubspec['name']}: Using user specified Firebase SDK version '#{$FirebaseSDKVersion}'"
+#   firebase_sdk_version = $FirebaseSDKVersion
+# else
   firebase_core_script = File.join(File.expand_path('..', File.expand_path('..', File.dirname(__FILE__))), 'firebase_core/ios/firebase_sdk_version.rb')
   if File.exist?(firebase_core_script)
     require firebase_core_script
     firebase_sdk_version = firebase_sdk_version!
     Pod::UI.puts "#{pubspec['name']}: Using Firebase SDK version '#{firebase_sdk_version}' defined in 'firebase_core'"
   end
-end
+# end
 
 Pod::Spec.new do |s|
   s.name             = pubspec['name']
